@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"\nconst p = process.env.CLAUDE_TOOL_INPUT_FILE_PATH || process.env.CLAUDE_TOOL_INPUT_PATH || '';\nconst skip = ['/test/', 'styles.js', 'main.jsx', '.test.', 'CLAUDE.md', 'settings.json', 'rounds.js'];\nconst isSrc = p.includes('/src/') && !skip.some(s => p.includes(s));\nif (isSrc) {\n  const test = p.replace(/\\.(jsx?)$/, '.test.$1');\n  console.error('[test-guard] ' + p + ' was modified — create or update ' + test + ' before finishing (see CLAUDE.md).');\n}\n\""
+          }
+        ]
+      }
+    ]
+  }
+}
