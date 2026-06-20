@@ -4,7 +4,7 @@ import PlayScreen from "./components/PlayScreen.jsx";
 import PauseScreen from "./components/PauseScreen.jsx";
 import GameOverScreen from "./components/GameOverScreen.jsx";
 import { DIFFICULTY_LEVELS } from "./data/rounds.js";
-import { buildLane } from "./utils/game.js";
+import { buildLane, shuffle } from "./utils/game.js";
 import styles from "./styles.js";
 
 // screen: "title" | "playing" | "gameOver"
@@ -15,6 +15,7 @@ export default function WordHero() {
   const [paused, setPaused] = useState(false);
   const [difficulty, setDifficulty] = useState(null);
   const [roundIdx, setRoundIdx] = useState(0);
+  const [shuffledRounds, setShuffledRounds] = useState([]);
   // roundKey increments whenever a genuinely new round begins (not on pause/resume).
   // This separates "start round" from "restart RAF after resume".
   const [roundKey, setRoundKey] = useState(0);
@@ -39,9 +40,10 @@ export default function WordHero() {
   const difficultyRef = useRef(difficulty);
   difficultyRef.current = difficulty;
 
-  const round = difficulty
-    ? difficulty.rounds[roundIdx % difficulty.rounds.length]
-    : null;
+  const round =
+    shuffledRounds.length > 0
+      ? shuffledRounds[roundIdx % shuffledRounds.length]
+      : null;
 
   // ── Start round ──────────────────────────────────────────────────────────
   const startRound = useCallback(() => {
@@ -164,6 +166,7 @@ export default function WordHero() {
     const level = DIFFICULTY_LEVELS[difficultyId];
     setDifficulty(level);
     difficultyRef.current = level;
+    setShuffledRounds(shuffle(level.rounds));
     setScore(0);
     setLives(3);
     livesRef.current = 3;
@@ -177,6 +180,7 @@ export default function WordHero() {
   }
 
   function restart() {
+    setShuffledRounds(shuffle(difficultyRef.current.rounds));
     setScore(0);
     setLives(3);
     livesRef.current = 3;
