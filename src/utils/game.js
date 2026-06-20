@@ -17,9 +17,9 @@ export function buildLane(round) {
   const words = shuffle([round.answer, ...round.decoys]);
   const colW = USABLE / words.length;
   return words.map((w, i) => {
-    // Random horizontal centre within each column, padded 10 % inside the column.
-    const colStart = EDGE_MARGIN + i * colW;
-    const x = colStart + colW * 0.1 + Math.random() * colW * 0.8;
+    // Fixed column centre — guarantees 21 % gaps between adjacent words so
+    // they never overlap, even on narrow mobile screens.
+    const x = EDGE_MARGIN + (i + 0.5) * colW;
     // Random vertical start so all words enter from different heights above sky.
     const y = -(8 + Math.random() * 22);
     return {

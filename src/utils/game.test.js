@@ -72,15 +72,13 @@ describe("buildLane", () => {
   });
 
   it("places words in distinct horizontal columns so they don't overlap", () => {
-    // Each of the 4 columns spans USABLE/4 = 21 %; words sit within the inner
-    // 80 % of their column, so adjacent words can come as close as ~4.2 %.
-    // Assert a gap that is always satisfied by the geometry but still proves
-    // the words occupy separate columns.
-    for (let run = 0; run < 50; run++) {
+    // Fixed column centres are at EDGE_MARGIN + (i + 0.5) * colW, giving
+    // exactly 21 % gaps between adjacent centres — strong non-overlap guarantee.
+    for (let run = 0; run < 10; run++) {
       const items = buildLane(round);
       const xs = items.map((i) => i.x).sort((a, b) => a - b);
       for (let i = 1; i < xs.length; i++) {
-        expect(xs[i] - xs[i - 1]).toBeGreaterThan(4);
+        expect(xs[i] - xs[i - 1]).toBeGreaterThan(20);
       }
     }
   });
