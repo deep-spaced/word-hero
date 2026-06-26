@@ -56,11 +56,7 @@ export default function PlayScreen({
       {/* ── Prompt bar ── */}
       <div style={styles.promptBar}>
         <span style={styles.promptKind}>{kindLabel(round.mode)}</span>
-        <span style={styles.promptText}>
-          {round.mode === "sight"
-            ? round.prompt
-            : `Rhymes / matches: "${round.prompt}"`}
-        </span>
+        <span style={styles.promptText}>{round.prompt}</span>
       </div>
 
       {/* ── Sky ── */}
