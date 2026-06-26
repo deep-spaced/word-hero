@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import PlayScreen from "./PlayScreen.jsx";
 
-const baseRound = { mode: "rhyme", prompt: "cat", answer: "hat", decoys: ["dog", "sun", "hop"] };
+const baseRound = { mode: "rhyme", prompt: "Rhymes with: cat", answer: "hat", decoys: ["dog", "sun", "hop"] };
 
 // Items now use x (% horizontal centre) instead of lane.
 const baseItems = [
@@ -88,12 +88,12 @@ describe("PlayScreen prompt bar", () => {
     expect(screen.getByText("SIGHT WORD")).toBeInTheDocument();
   });
 
-  it("renders the prompt text for non-sight mode", () => {
+  it("renders the prompt text directly", () => {
     renderPlay();
-    expect(screen.getByText(/Rhymes \/ matches: "cat"/)).toBeInTheDocument();
+    expect(screen.getByText("Rhymes with: cat")).toBeInTheDocument();
   });
 
-  it("renders the raw prompt for sight mode", () => {
+  it("renders the sight word prompt directly", () => {
     renderPlay({
       round: { mode: "sight", prompt: "Find the sight word", answer: "the", decoys: ["teh", "hte", "eth"] },
     });
