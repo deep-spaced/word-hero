@@ -1,5 +1,6 @@
 import styles from "../styles.js";
 import { kindLabel } from "../utils/game.js";
+import "./PlayScreen.css";
 
 export default function PlayScreen({
   round,
@@ -70,6 +71,7 @@ export default function PlayScreen({
           return (
             <button
               key={item.id}
+              className="falling-word"
               data-testid={item.isAnswer ? "answer-word" : "decoy-word"}
               onClick={() => onClick(item)}
               style={{

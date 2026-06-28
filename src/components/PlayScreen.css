@@ -1,0 +1,30 @@
+/* Sizing and tap-target styles for falling word buttons.
+   Kept in CSS so media queries can make them larger on phones.
+   Appearance / positioning props stay in styles.js inline styles. */
+
+.falling-word {
+  font-size: 21px;
+  padding: 14px 14px;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Phone — comfortably above the 44 px Apple / 48 px Google tap-target floors */
+@media (max-width: 600px) {
+  .falling-word {
+    font-size: 20px;
+    padding: 13px 8px;
+    min-height: 52px;
+    min-width: 48px;
+  }
+}
+
+/* Small phone (e.g. iPhone SE) */
+@media (max-width: 400px) {
+  .falling-word {
+    font-size: 18px;
+    padding: 12px 6px;
+    min-height: 52px;
+    min-width: 48px;
+  }
+}
